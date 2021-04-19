@@ -25,11 +25,11 @@ GENERATE_ZIP=false
 DRY_RUN=true
 
 # Set options based on user input
-if [ -z "$1" ]; then
+if [ -n "$1" ]; then
   GENERATE_ZIP=$1;
 fi
 
-if [ -z "$2" ]; then
+if [ -n "$2" ]; then
   DRY_RUN=$2;
 fi
 
@@ -133,14 +133,14 @@ svn propset svn:mime-type image/jpeg assets/*.jpg || true
 
 svn status
 
-if ! $DRY_RUN; then
+if [ "$DRY_RUN" = "true" ]; then
+  echo "➤ DRY RUN, *not* doing any commits to wordpress.org. Would commit $VERSION from GitHub to $SVN_URL in a non-dry-run."
+else
   echo "➤ Committing files..."
   svn commit -m "Update to version $VERSION from GitHub" --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
-else
-  echo "➤ DRY RUN, *not* doing any commits to wordpress.org. Would commit $VERSION from GitHub to $SVN_URL in a non-dry-run."
 fi
 
-if ! $GENERATE_ZIP; then
+if [ "$GENERATE_ZIP" = "true" ]; then
   echo "Generating zip file..."
   cd "$SVN_DIR/trunk" || exit
   zip -r "${GITHUB_WORKSPACE}/${SLUG}.zip" .
