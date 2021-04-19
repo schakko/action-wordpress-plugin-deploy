@@ -137,7 +137,7 @@ if ! $DRY_RUN; then
   echo "➤ Committing files..."
   svn commit -m "Update to version $VERSION from GitHub" --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
 else
-  "➤ DRY RUN, *not* doing any commits to wordpress.org. Would commit $VERSION from GitHub to $SVN_URL in a non-dry-run."
+  echo "➤ DRY RUN, *not* doing any commits to wordpress.org. Would commit $VERSION from GitHub to $SVN_URL in a non-dry-run."
 fi
 
 if ! $GENERATE_ZIP; then
