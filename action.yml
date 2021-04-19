@@ -5,11 +5,15 @@ inputs:
   generate-zip:
     description: 'Generate package zip file?'
     default: false
+  dry-run:
+    description: 'Make a dry run before finally commiting to wordpress.org'
+    default: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.generate-zip }}
+    - ${{ inputs.dry-run }}
 branding:
   icon: 'upload-cloud'
   color: 'blue'
